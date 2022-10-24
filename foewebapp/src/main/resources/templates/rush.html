@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+<title th:text="${greatbuilding.name}">FOE GB Web Application</title>
+
+</head>
+<body class="text-bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-dark">
+		<div class="container-fluid">
+			<span class="navbar-brand">Stark FOE web app</span>
+			<a class="btn btn-secondary bi bi-github" href="https://github.com/Stark91"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    	<span class="navbar-toggler-icon"></span>
+		    </button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/ages">Liste des ages</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/greatbuildings">Liste des GM</a>
+					</li>
+				</ul>
+		    </div>
+		</div>
+	</nav>
+	<div class="container special">
+		<h2 class="h2" th:text="${greatbuilding.name}"> Nom </h2>
+		<div class="nav nav-pills nav-fill">
+			<a id="gb-nav-tab" class="stark-nav-tab nav-link text-bg-dark bi bi-building" th:href="@{/greatbuilding/{id}/gb(id=${greatbuilding.id})}"> Description </a>
+			<a id="lvl-nav-tab" class="stark-nav-tab nav-link text-bg-dark bi bi-shield-fill-check" th:href="@{/greatbuilding/{id}/lvl(id=${greatbuilding.id})}"> Sécurisation du niveau </a>
+			<a id="rush-nav-tab" class="stark-nav-tab nav-link active bi bi-shield-fill-plus" th:href="@{/greatbuilding/{id}/rush(id=${greatbuilding.id})}"> Rush sur plusieurs niveau </a>
+		</div>
+		<form class="d-flex flex-column justify-content-center align-items-center" method="post" th:object="${rush}" th:action="@{/greatbuilding/{id}/rush(id=${greatbuilding.id})}">
+			<div class="input-group m-3 w-50">
+				<span class="input-group-text" id="start-lvl-button-label"> Niveau de départ </span>
+				<input th:field="*{startLevelField}" type="number" min="0" class="form-control" placeholder="Niveau" aria-label="Niveau" aria-describedby="start-lvl-button-label">
+				<span class="input-group-text" id="end-lvl-button-label"> Niveau de fin </span>
+				<input th:field="*{endLevelField}" type="number" min="1" class="form-control" placeholder="Niveau" aria-label="Niveau" aria-describedby="end-lvl-button-label">
+			</div>
+			<div class="d-flex justify-content-center align-items-center">
+				<div class="stark-arch-boost input-group m-3">
+					<input th:field="*{p1BoostField}" type="number" step="0.1" min="0" class="form-control" aria-label="Taux P1" id="p1-arch-boost-input" aria-describedby="p1-arch-boost" th:value="${rush.p1BoostField}">
+					<span class="input-group-text" id="p1-arch-boost">%</span>
+				</div>
+				<div class="stark-arch-boost input-group m-3">
+					<input th:field="*{p2BoostField}" type="number" step="0.1" min="0" class="form-control" aria-label="Taux P2" id="p2-arch-boost-input" aria-describedby="p2-arch-boost" th:value="${rush.p2BoostField}">
+					<span class="input-group-text" id="p2-arch-boost">%</span>
+				</div>
+				<div class="stark-arch-boost input-group m-3">
+					<input th:field="*{p3BoostField}" type="number" step="0.1" min="0" class="form-control" aria-label="Taux P3" id="p3-arch-boost-input" aria-describedby="p3-arch-boost" th:value="${rush.p3BoostField}">
+					<span class="input-group-text" id="p3-arch-boost">%</span>
+				</div>
+				<div class="stark-arch-boost input-group m-3">
+					<input th:field="*{p4BoostField}" type="number" step="0.1" min="0" class="form-control" aria-label="Taux P4" id="p4-arch-boost-input" aria-describedby="p4-arch-boost" th:value="${rush.p4BoostField}">
+					<span class="input-group-text" id="p4-arch-boost">%</span>
+				</div>
+				<div class="stark-arch-boost input-group m-3">
+					<input th:field="*{p5BoostField}" type="number" step="0.1" min="0" class="form-control" aria-label="Taux P5" id="p5-arch-boost-input" aria-describedby="p5-arch-boost" th:value="${rush.p5BoostField}">
+					<span class="input-group-text" id="p5-arch-boost">%</span>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center align-items-center m-3">
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio0" value="Proprietaire">
+					<label class="form-check-label" for="ownerRadio0">Propriétaire</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio1" value="P1">
+					<label class="form-check-label" for="ownerRadio1">P1</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio2" value="P2">
+					<label class="form-check-label" for="ownerRadio2">P2</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio3" value="P3">
+					<label class="form-check-label" for="ownerRadio3">P3</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio4" value="P4">
+					<label class="form-check-label" for="ownerRadio4">P4</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{ownerField}" class="form-check-input" type="radio" name="ownerRadioOptions" id="ownerRadio5" value="P5">
+					<label class="form-check-label" for="ownerRadio5">P5</label>
+				</div>
+			</div>
+			<input class="btn btn-light" type="submit" id="lvl-button-submit" value="Valider">
+			<span th:text="${rushTotal}"></span>
+		</form>
+		<table class="table table-dark table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Niveau</th>
+					<th scope="col">Total</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).Proprietaire} ? text-bg-danger : stark-owner">Sécurisation</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P1} ? text-bg-danger : stark-owner">P1</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P2} ? text-bg-danger : stark-owner">P2</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P3} ? text-bg-danger : stark-owner">P3</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P4} ? text-bg-danger : stark-owner">P4</th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P5} ? text-bg-danger : stark-owner">P5</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="entry, rewardSecured : ${rewardSecuredMap}" th:with="rewardSecured=${entry.value}">
+					<th scope="col" th:text="${rewardSecured.reward.level}"> 0 </th>
+					<th scope="col" th:text="${rewardSecured.reward.total}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).Proprietaire} ? text-bg-danger : stark-owner" th:text="${rewardSecured.fpToSecure}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P1} ? text-bg-danger : stark-owner" th:text="${rewardSecured.reward.p1}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P2} ? text-bg-danger : stark-owner" th:text="${rewardSecured.reward.p2}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P3} ? text-bg-danger : stark-owner" th:text="${rewardSecured.reward.p3}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P4} ? text-bg-danger : stark-owner" th:text="${rewardSecured.reward.p4}"> 0 </th>
+					<th scope="col" th:class="${rush.ownerField == T(stark.foe.foewebapp.model.Owner).P5} ? text-bg-danger : stark-owner" th:text="${rewardSecured.reward.p5}"> 0 </th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+</body>
+</html>
