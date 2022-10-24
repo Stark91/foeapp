@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author madar
- *
- */
-module csvtosql {
-}
